@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lorenz — Calendar 2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fff;--bg2:#f5f5f4;--bg3:#f0ede8;--tx:#1a1a1a;--tx2:#6b6b6b;--tx3:#9b9b9b;--bd:rgba(0,0,0,.12);--bds:rgba(0,0,0,.22);--rm:8px;--rl:12px}
+@media(prefers-color-scheme:dark){:root{--bg:#1c1c1e;--bg2:#2c2c2e;--bg3:#3a3a3c;--tx:#f0f0f0;--tx2:#a0a0a0;--tx3:#6e6e6e;--bd:rgba(255,255,255,.1);--bds:rgba(255,255,255,.2)}}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg3);color:var(--tx);min-height:100vh;padding:1.5rem 1rem 3rem}
+.wrap{max-width:880px;margin:0 auto}
+header{margin-bottom:1.4rem}
+header h1{font-size:22px;font-weight:500}
+header p{font-size:13px;color:var(--tx2);margin-top:4px}
+.ctrls{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.ctrls select,.ctrls button{font-size:12px;padding:6px 12px;border-radius:var(--rm);border:.5px solid var(--bds);background:var(--bg);color:var(--tx);cursor:pointer;font-family:inherit}
+.ctrls button:hover{background:var(--bg2)}
+.alv{background:#d1f5e0!important;color:#27500A!important;border-color:#639922!important}
+.aor{background:#d1f5e0!important;color:#27500A!important;border-color:#639922!important}
+.abz{background:#ede9fe!important;color:#5b21b6!important;border-color:#a78bfa!important}
+.awf{background:var(--bg2)!important;font-weight:500}
+.asw{background:#dbeafe!important;color:#1e40af!important;border-color:#93c5fd!important}
+.banner{background:#fff8e1;border:.5px solid #f59e0b;border-radius:var(--rm);padding:8px 14px;font-size:12px;color:#92400e;margin-bottom:1rem}
+@media(prefers-color-scheme:dark){.banner{background:#2e1a00;border-color:#b45309;color:#fbbf24}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:8px;margin-bottom:1rem}
+.stat{background:var(--bg2);border-radius:var(--rm);padding:10px 12px}
+.sl{font-size:10px;color:var(--tx2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.sv{font-size:19px;font-weight:500}
+.ss{font-size:10px;color:var(--tx3);margin-top:2px}
+.sv.w{color:#b45309}.sv.d{color:#dc2626}.sv.g{color:#16a34a}.sv.pu{color:#5b21b6}.sv.or{color:#27500A}.sv.wfhc{color:#dc2626}
+@media(prefers-color-scheme:dark){.sv.w{color:#fbbf24}.sv.d{color:#f87171}.sv.g{color:#4ade80}}
+.leg{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:1rem;font-size:11px;align-items:center}
+.li{display:flex;align-items:center;gap:4px}
+.ld{width:11px;height:11px;border-radius:2px;flex-shrink:0}
+.months{display:flex;flex-direction:column;gap:1.2rem}
+.mb{background:var(--bg);border:.5px solid var(--bd);border-radius:var(--rl);padding:1rem}
+.mt{font-size:15px;font-weight:500;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.mt span{font-size:11px;font-weight:400;color:var(--tx2)}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.dh{font-size:10px;color:var(--tx3);text-align:center;padding:3px 0;font-weight:500}
+.dh.wk{color:#dc2626}
+.dy{border-radius:4px;font-size:11px;text-align:center;cursor:default;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:4px 2px}
+.dn{font-size:11px;line-height:1}
+.dt{font-size:8.5px;line-height:1.3;margin-top:2px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center}
+.dt2{font-size:7.5px;line-height:1.2;margin-top:1px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;opacity:.85}
+.wfhb{font-size:8.5px;font-weight:700;color:#dc2626;margin-top:2px;line-height:1.3;letter-spacing:.02em}
+.de{background:transparent}
+.dwe{background:var(--bg2);color:var(--tx2)}
+.dwo{background:var(--bg);color:var(--tx)}
+.dvn{background:#fff3cd;color:#856404}
+.dlf{background:#d1f5e0;color:#27500A;cursor:pointer}
+.dof{background:#d1f5e0;color:#27500A;cursor:pointer}
+.dbz{background:#ede9fe;color:#5b21b6}
+.dlbz{background:linear-gradient(135deg,#d1f5e0 50%,#ede9fe 50%);color:#5b21b6}
+.dso{background:#e0f0ff;color:#1e4a8a}
+.dco{background:#fffbea;color:#7a5c00;border:1.5px dashed #c8a800}
+.clk{cursor:pointer}.clk:hover{opacity:.75}
+@media(prefers-color-scheme:dark){
+.dvn{background:#3d2e00;color:#ffc107}
+.dlf,.dof{background:#1a3a28;color:#81c784}
+.dbz{background:#2e1a5e;color:#c4b5fd}
+.dlbz{background:linear-gradient(135deg,#1a3a28 50%,#2e1a5e 50%);color:#c4b5fd}
+.dso{background:#0d2a45;color:#7ec8f5}
+.dco{background:#2e2600;color:#f0c040;border-color:#8a7000}
+}
+.panel{background:var(--bg2);border:.5px solid var(--bds);border-radius:var(--rl);padding:1rem;margin-bottom:1rem}
+.panel h3{font-size:14px;font-weight:500;margin-bottom:8px}
+.panel p{font-size:12px;color:var(--tx2);margin-bottom:8px}
+.pa{display:flex;gap:8px;flex-wrap:wrap}
+.pa button{font-size:12px;padding:5px 10px;border-radius:var(--rm);border:.5px solid var(--bds);background:var(--bg);color:var(--tx);cursor:pointer;font-family:inherit}
+.pa button:hover{background:var(--bg2)}
+.brow{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.brow input[type=text]{font-size:12px;padding:5px 8px;border-radius:var(--rm);border:.5px solid var(--bds);background:var(--bg);color:var(--tx);flex:1;min-width:120px;font-family:inherit}
+.brow input[type=date]{font-size:12px;padding:5px 8px;border-radius:var(--rm);border:.5px solid var(--bds);background:var(--bg);color:var(--tx);font-family:inherit}
+.bi{display:flex;align-items:center;gap:8px;font-size:12px;padding:5px 8px;background:var(--bg);border-radius:var(--rm);margin-bottom:4px;border:.5px solid var(--bd)}
+.bid{font-weight:500;color:#5b21b6}.bida{color:var(--tx2);flex:1}
+.bdl{color:#dc2626;cursor:pointer;background:none;border:none;font-size:14px;line-height:1;padding:0 2px;font-family:inherit}
+#daypop{display:none;position:fixed;z-index:9999;background:var(--bg);border:.5px solid var(--bds);border-radius:var(--rm);padding:6px;min-width:175px;box-shadow:0 4px 20px rgba(0,0,0,.18)}
+#daypop button{display:block;width:100%;text-align:left;font-size:12px;padding:7px 10px;border:none;background:none;cursor:pointer;border-radius:4px;color:var(--tx);white-space:nowrap;font-family:inherit}
+#daypop button:hover{background:var(--bg2)}
+#daypop hr{border:none;border-top:.5px solid var(--bd);margin:4px 0}
+#popoverlay{display:none;position:fixed;inset:0;z-index:9998}
+.share-a textarea{width:100%;font-size:11px;font-family:monospace;padding:8px;border-radius:var(--rm);border:.5px solid var(--bds);background:var(--bg);color:var(--tx);resize:vertical;min-height:170px;margin-top:8px}
+.info{font-size:12px;color:var(--tx2);margin-top:.5rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Lorenz — Calendar 2026</h1>
+  <p>Q2 · Q3 · Q4 — Leave, origin country leave, business trips, WFH &amp; VN holidays</p>
+</header>
+
+<div id="daypop"></div>
+<div id="popoverlay" onclick="cp()"></div>
+
+<div class="ctrls">
+  <select id="qsel" onchange="cp();setMode('n');ra()">
+    <option value="Q2">Q2 — Apr, May, Jun</option>
+    <option value="Q3">Q3 — Jul, Aug, Sep</option>
+    <option value="Q4">Q4 — Oct, Nov, Dec</option>
+  </select>
+  <button id="btnLv" onclick="setMode(md==='lv'?'n':'lv')">✦ Leave</button>
+  <button id="btnOr" onclick="setMode(md==='or'?'n':'or')">🌍 Origin leave</button>
+  <button id="btnBz" onclick="setMode(md==='bz'?'n':'bz')">✈ Biz trip</button>
+  <button id="btnWf" onclick="setMode(md==='wf'?'n':'wf')">⌂ WFH</button>
+  <button id="btnSw" onclick="setMode(md==='sw'?'n':'sw')">⇄ Swap</button>
+  <button onclick="showShare()">↗ Share</button>
+  <button onclick="clearAll()" style="color:var(--tx2)">Clear all</button>
+</div>
+
+<div class="banner">2 leave days already used in 2026 · Pro-rata adjustment: −3.5 days · Effective remaining: <strong id="brem"></strong></div>
+<div id="mpanel" style="display:none" class="panel"></div>
+<div class="stats" id="stats"></div>
+
+<div class="leg">
+  <div class="li"><div class="ld" style="background:#fff3cd;border:1px solid #c8a800"></div><span>VN holiday</span></div>
+  <div class="li"><div class="ld" style="background:#d1f5e0;border:1px solid #639922"></div><span>Leave (annual or origin, full or half)</span></div>
+  <div class="li"><div class="ld" style="background:#ede9fe;border:1px solid #a78bfa"></div><span>Biz trip</span></div>
+  <div class="li"><span style="font-size:8.5px;font-weight:700;color:#dc2626">WFH</span><span>&nbsp;tag on day</span></div>
+  <div class="li"><div class="ld" style="background:#e0f0ff;border:1px solid #7ab8f5"></div><span>⇄ Swap-Work</span></div>
+  <div class="li"><div class="ld" style="background:#fffbea;border:1.5px dashed #c8a800"></div><span>⇄ Swap-Holiday</span></div>
+  <div class="li"><div class="ld" style="background:#f5f5f4;border:1px solid #ccc"></div><span>Weekend</span></div>
+</div>
+
+<div id="months" class="months"></div>
+<div class="info" id="info"></div>
+</div>
+
+<script>
+const VNH={"2026-04-26":"Hung Kings","2026-04-27":"Hung Kings","2026-04-30":"Reunification Day","2026-05-01":"Labour Day","2026-09-02":"National Day","2026-09-03":"National Day","2026-09-04":"National Day"};
+const QQ={Q2:[{m:3,y:2026},{m:4,y:2026},{m:5,y:2026}],Q3:[{m:6,y:2026},{m:7,y:2026},{m:8,y:2026}],Q4:[{m:9,y:2026},{m:10,y:2026},{m:11,y:2026}]};
+const MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const TOT=16,PR=3.5,AU=2,OT=2;
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const lv=(k,d)=>{try{const v=localStorage.getItem(k);return v!=null?JSON.parse(v):d}catch(e){return d}};
+let LM=lv("lm26z",{}),OM=lv("om26z",{}),WS=new Set(lv("ws26z",[])),SW=lv("sw26z",{}),BT=lv("bt26z",[]);
+let md="n",sws=null;
+const lc=()=>Object.values(LM).reduce((s,v)=>s+(v==="full"?1:.5),0);
+const oc=()=>Object.values(OM).reduce((s,v)=>s+(v==="full"?1:.5),0);
+const eff=()=>TOT-PR;
+const used=()=>AU+lc();
+const rem=()=>eff()-used();
+const isW=(y,m,d)=>{const w=new Date(y,m,d).getDay();return w===0||w===6;};
+const mkds=(y,m,d)=>`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+const bdates=t=>{const d=[];let c=new Date(t.start+"T12:00:00");const e=new Date(t.end+"T12:00:00");while(c<=e){d.push(c.toISOString().slice(0,10));c.setDate(c.getDate()+1);}return d;};
+const bfd=s=>BT.filter(t=>bdates(t).includes(s));
+const popEl=document.getElementById("daypop");
+const ovEl=document.getElementById("popoverlay");
+function cp(){popEl.style.display="none";ovEl.style.display="none";popEl.innerHTML="";}
+function showPop(ds,rect){
+  cp();
+  let opts=[];
+  if(md==="lv"){
+    const cur=LM[ds];
+    if(!cur)opts=[{t:"Full day leave",a:()=>{LM[ds]="full";sv("lm26z",LM);}},{t:"Half day leave",a:()=>{LM[ds]="half";sv("lm26z",LM);}}];
+    else if(cur==="half")opts=[{t:"Upgrade to full day",a:()=>{LM[ds]="full";sv("lm26z",LM);}},{t:"Remove leave",a:()=>{delete LM[ds];sv("lm26z",LM);}}];
+    else opts=[{t:"Downgrade to half day",a:()=>{LM[ds]="half";sv("lm26z",LM);}},{t:"Remove leave",a:()=>{delete LM[ds];sv("lm26z",LM);}}];
+  }else if(md==="or"){
+    const cur=OM[ds],uo=oc();
+    if(!cur){
+      if(uo+1<=OT)opts.push({t:"Full day origin leave",a:()=>{OM[ds]="full";sv("om26z",OM);}});
+      if(uo+.5<=OT)opts.push({t:"Half day origin leave",a:()=>{OM[ds]="half";sv("om26z",OM);}});
+      if(!opts.length)opts=[{t:"Limit reached (max 2 days)",a:null}];
+    }else if(cur==="half"){
+      if(uo+.5<=OT)opts.push({t:"Upgrade to full day",a:()=>{OM[ds]="full";sv("om26z",OM);}});
+      opts.push({t:"Remove origin leave",a:()=>{delete OM[ds];sv("om26z",OM);}});
+    }else{
+      opts=[{t:"Downgrade to half day",a:()=>{OM[ds]="half";sv("om26z",OM);}},{t:"Remove origin leave",a:()=>{delete OM[ds];sv("om26z",OM);}}];
+    }
+  }else if(md==="wf"){
+    if(WS.has(ds))opts=[{t:"Remove WFH",a:()=>{WS.delete(ds);sv("ws26z",[...WS]);}}];
+    else opts=[{t:"Mark as WFH",a:()=>{WS.add(ds);sv("ws26z",[...WS]);}}];
+  }
+  if(!opts.length)return;
+  opts.forEach(o=>{
+    const b=document.createElement("button");b.textContent=o.t;
+    if(o.a){b.onclick=()=>{o.a();cp();ra();};}
+    else{b.style.color="var(--tx3)";b.style.cursor="default";}
+    popEl.appendChild(b);
+  });
+  const hr=document.createElement("hr");popEl.appendChild(hr);
+  const cb=document.createElement("button");cb.textContent="Cancel";cb.style.color="var(--tx2)";cb.onclick=cp;popEl.appendChild(cb);
+  const sy=window.scrollY||document.documentElement.scrollTop;
+  let top=rect.bottom+sy+4;
+  let left=rect.left+(rect.width/2)-87;
+  left=Math.max(4,Math.min(left,window.innerWidth-185));
+  popEl.style.top=top+"px";popEl.style.left=left+"px";popEl.style.display="block";ovEl.style.display="block";
+}
+function setMode(m){
+  md=m;sws=null;cp();
+  ["btnLv","btnOr","btnBz","btnWf","btnSw"].forEach(id=>document.getElementById(id).className="");
+  if(m==="lv")document.getElementById("btnLv").className="alv";
+  else if(m==="or")document.getElementById("btnOr").className="aor";
+  else if(m==="bz")document.getElementById("btnBz").className="abz";
+  else if(m==="wf")document.getElementById("btnWf").className="awf";
+  else if(m==="sw")document.getElementById("btnSw").className="asw";
+  const p=document.getElementById("mpanel");
+  if(m==="lv"){p.style.display="block";p.innerHTML=`<h3>Leave mode</h3><p>Click any working day to choose full or half day annual leave. Click again to change or remove.</p><div class="pa"><button onclick="setMode('n')">Done</button></div>`;}
+  else if(m==="or"){p.style.display="block";p.innerHTML=`<h3>Origin country leave</h3><p>Click a working day for full or half day origin leave (max 2 days total, separate from annual leave — does not affect your remaining count).</p><div class="pa"><button onclick="setMode('n')">Done</button></div>`;}
+  else if(m==="bz"){p.style.display="block";rbp();}
+  else if(m==="wf"){p.style.display="block";p.innerHTML=`<h3>WFH mode</h3><p>Click any regular working day to tag it as WFH. A bold red WFH label appears on the day. Click again to remove.</p><div class="pa"><button onclick="setMode('n')">Done</button></div>`;}
+  else if(m==="sw"){p.style.display="block";p.innerHTML=`<h3>Swap holiday mode</h3><p id="smsg">Click a VN holiday to mark as a day you'll work (⇄ Swap-Work, turns blue), then click the working day you'll take off instead (⇄ Swap-Holiday, turns light yellow).</p><div class="pa"><button onclick="clrSw()">Clear swaps</button><button onclick="setMode('n')">Done</button></div>`;}
+  else{p.style.display="none";}
+  ra();
+}
+function rbp(){
+  const list=BT.map((t,i)=>`<div class="bi"><span class="bid">✈ ${t.dest}</span><span class="bida">${t.start} → ${t.end}</span><button class="bdl" onclick="delbiz(${i})">×</button></div>`).join("");
+  document.getElementById("mpanel").innerHTML=`<h3>Business trips</h3>
+    <div class="brow"><input type="text" id="bd" placeholder="Destination (e.g. Singapore)"/><input type="date" id="bs" min="2026-04-01" max="2026-12-31"/><span style="font-size:12px;color:var(--tx2)">to</span><input type="date" id="be" min="2026-04-01" max="2026-12-31"/><button onclick="addbiz()" style="padding:5px 12px;font-size:12px;border-radius:var(--rm);border:.5px solid var(--bds);background:var(--bg);color:var(--tx);cursor:pointer">Add</button></div>
+    <div>${list||'<span style="font-size:12px;color:var(--tx2)">No trips added yet.</span>'}</div>
+    <div class="pa" style="margin-top:8px"><button onclick="setMode('n')">Done</button></div>`;
+}
+function addbiz(){const dest=document.getElementById("bd").value.trim(),s=document.getElementById("bs").value,e=document.getElementById("be").value;if(!dest||!s||!e||s>e){alert("Please fill destination and dates.");return;}BT.push({dest,start:s,end:e});sv("bt26z",BT);rbp();ra();}
+function delbiz(i){BT.splice(i,1);sv("bt26z",BT);rbp();ra();}
+function clrSw(){SW={};sv("sw26z",SW);sws=null;ra();}
+function clearAll(){LM={};OM={};WS=new Set();SW={};BT=[];sv("lm26z",LM);sv("om26z",OM);sv("ws26z",[]);sv("sw26z",SW);sv("bt26z",BT);setMode("n");ra();}
+function cday(ds,y,m,d,el){
+  const vn=!!VNH[ds],wk=isW(y,m,d),so=SW[ds]==="swapped-out";
+  if(md==="sw"){
+    if(!sws){if(vn&&!wk){sws=ds;SW[ds]="swapped-out";sv("sw26z",SW);document.getElementById("smsg").textContent="Good — now click the working day you'll take off instead.";ra();}}
+    else{if(!wk&&!vn&&!LM[ds]&&ds!==sws&&!SW[ds]){SW[ds]="compensating";sv("sw26z",SW);sws=null;document.getElementById("smsg").textContent="Swap registered. Click another holiday or Done.";ra();}}
+    return;
+  }
+  if(!wk&&!vn&&!so&&(md==="lv"||md==="or"||md==="wf")){showPop(ds,el.getBoundingClientRect());}
+}
+function gdi(ds,y,m,d){
+  const wk=isW(y,m,d),vn=VNH[ds],lv_=LM[ds],or_=OM[ds],bz=bfd(ds);
+  const so=SW[ds]==="swapped-out",sc=SW[ds]==="compensating";
+  const wfh=WS.has(ds)&&!wk&&!vn&&!lv_&&!or_;
+  let cls="dwo",tag="",tag2="";
+  if(so){cls="dso";tag=vn?vn.slice(0,13):"Holiday";tag2="⇄ Swap-Work";}
+  else if(sc){cls="dco";tag="⇄ Swap-Holiday";}
+  else if(vn){cls="dvn";tag=vn.slice(0,13);}
+  else if(or_){cls="dof";tag=or_==="half"?"½ origin leave":"origin leave";}
+  else if(lv_){
+    if(bz.length&&!wk){cls="dlbz";tag="leave+✈ "+bz[0].dest.slice(0,6);}
+    else{cls="dlf";tag=lv_==="half"?"½ leave":"leave";}
+  }
+  else if(bz.length&&!wk){cls="dbz";tag="✈ "+bz[0].dest.slice(0,9);}
+  else if(wk){cls="dwe";}
+  const clk=(md==="lv"||md==="or"||md==="wf")&&!wk&&!vn&&!so;
+  return{cls,tag,tag2,wfh,clk};
+}
+function renderMonth(y,m){
+  const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),start=(first+6)%7;
+  let h=`<div class="mb"><div class="mt">${MN[m]} ${y}<span>${days} days</span></div><div class="cg"><div class="dh">Mon</div><div class="dh">Tue</div><div class="dh">Wed</div><div class="dh">Thu</div><div class="dh">Fri</div><div class="dh wk">Sat</div><div class="dh wk">Sun</div>`;
+  for(let i=0;i<start;i++)h+=`<div class="dy de"></div>`;
+  for(let d=1;d<=days;d++){
+    const s=mkds(y,m,d),{cls,tag,tag2,wfh,clk}=gdi(s,y,m,d);
+    h+=`<div class="dy ${cls}${clk?" clk":""}" onclick="cday('${s}',${y},${m},${d},this)" title="${VNH[s]||tag||''}">
+      <div class="dn">${d}</div>
+      ${tag?`<div class="dt">${tag}</div>`:""}
+      ${tag2?`<div class="dt2">${tag2}</div>`:""}
+      ${wfh?`<div class="wfhb">WFH</div>`:""}
+    </div>`;
+  }
+  h+=`</div></div>`;return h;
+}
+function rs(){
+  const l=lc(),o=oc(),e=eff(),u=used(),r=rem();
+  const cl=r<3?"d":r<5?"w":"g";
+  const bdc=new Set(BT.flatMap(t=>bdates(t).filter(d=>{const[y,m,dd]=d.split("-").map(Number);return!isW(y,m-1,dd);}))).size;
+  const sc=Object.values(SW).filter(v=>v==="swapped-out").length;
+  const wc=[...WS].filter(d=>{const[y,m,dd]=d.split("-").map(Number);return!isW(y,m-1,dd);}).length;
+  document.getElementById("brem").textContent=r.toFixed(1)+" days";
+  document.getElementById("stats").innerHTML=`
+    <div class="stat"><div class="sl">Annual leaves</div><div class="sv">16</div><div class="ss">contract days</div></div>
+    <div class="stat"><div class="sl">Pro-rata adj.</div><div class="sv w">−3.5</div><div class="ss">less than 1yr</div></div>
+    <div class="stat"><div class="sl">Effective total</div><div class="sv">${e.toFixed(1)}</div><div class="ss">available 2026</div></div>
+    <div class="stat"><div class="sl">Used in 2026</div><div class="sv">${u.toFixed(1)}</div><div class="ss">${AU} earlier + ${l.toFixed(1)} here</div></div>
+    <div class="stat"><div class="sl">Remaining</div><div class="sv ${cl}">${r.toFixed(1)}</div><div class="ss">of ${e.toFixed(1)} effective</div></div>
+    <div class="stat"><div class="sl">Origin country leaves</div><div class="sv or">${o.toFixed(1)} / ${OT}</div><div class="ss">separate entitlement</div></div>
+    <div class="stat"><div class="sl">Biz trip days</div><div class="sv pu">${bdc}</div><div class="ss">working days</div></div>
+    <div class="stat"><div class="sl">WFH days</div><div class="sv wfhc">${wc}</div><div class="ss">tagged</div></div>
+    <div class="stat"><div class="sl">Swaps</div><div class="sv">${sc}</div><div class="ss">holidays swapped</div></div>`;
+  document.getElementById("info").textContent="Mode: "+(md==="n"?"view only — click a mode button above to edit":"editing — "+md);
+}
+function ra(){
+  const q=document.getElementById("qsel").value;
+  document.getElementById("months").innerHTML=QQ[q].map(({m,y})=>renderMonth(y,m)).join("");
+  rs();
+}
+function showShare(){
+  const p=document.getElementById("mpanel");p.style.display="block";md="share";cp();
+  const l=lc(),o=oc(),e=eff(),r=rem(),u=used();
+  const ln=[];
+  ln.push("=== Lorenz — Leave & Travel Plan 2026 ===");
+  ln.push(`Annual leaves: 16 − 3.5 (pro-rata) = ${e.toFixed(1)} days effective`);
+  ln.push(`Origin country leaves: ${o.toFixed(1)} / ${OT} days used (separate entitlement)`);
+  ln.push(`Leave used in 2026: ${u.toFixed(1)} days (${AU} earlier + ${l.toFixed(1)} planned below)`);
+  ln.push(`Remaining: ${r.toFixed(1)} days`);ln.push("");
+  const fl=Object.entries(LM).filter(([,v])=>v==="full").map(([k])=>k).sort();
+  const hl=Object.entries(LM).filter(([,v])=>v==="half").map(([k])=>k).sort();
+  ln.push("ANNUAL LEAVE:");
+  if(fl.length)fl.forEach(d=>ln.push("  "+d+" (full)"));
+  if(hl.length)hl.forEach(d=>ln.push("  "+d+" (half)"));
+  if(!fl.length&&!hl.length)ln.push("  (none planned yet)");
+  ln.push(`  Total: ${l.toFixed(1)} days`);ln.push("");
+  const fo=Object.entries(OM).filter(([,v])=>v==="full").map(([k])=>k).sort();
+  const ho=Object.entries(OM).filter(([,v])=>v==="half").map(([k])=>k).sort();
+  ln.push("ORIGIN COUNTRY LEAVES:");
+  if(fo.length)fo.forEach(d=>ln.push("  "+d+" (full)"));
+  if(ho.length)ho.forEach(d=>ln.push("  "+d+" (half)"));
+  if(!fo.length&&!ho.length)ln.push("  (none planned yet)");
+  ln.push("");ln.push("BUSINESS TRIPS:");
+  if(BT.length)BT.forEach(t=>ln.push(`  ${t.dest}: ${t.start} → ${t.end}`));
+  else ln.push("  (none planned yet)");
+  ln.push("");
+  const wfl=[...WS].filter(d=>{const[y,m,dd]=d.split("-").map(Number);return!isW(y,m-1,dd);}).sort();
+  ln.push("WFH DAYS:");
+  if(wfl.length)wfl.forEach(d=>ln.push("  "+d));
+  else ln.push("  (none tagged)");
+  ln.push("");
+  const sl=Object.entries(SW).filter(([,v])=>v==="swapped-out").map(([k])=>k).sort();
+  const cl2=Object.entries(SW).filter(([,v])=>v==="compensating").map(([k])=>k).sort();
+  ln.push("HOLIDAY SWAPS:");
+  if(sl.length)sl.forEach((d,i)=>ln.push(`  Working: ${d} (${VNH[d]||""}) ⇄ Off: ${cl2[i]||"?"}`));
+  else ln.push("  (none)");
+  ln.push("");ln.push("VN PUBLIC HOLIDAYS Q2–Q4 2026:");
+  Object.entries(VNH).sort().forEach(([d,n])=>ln.push(`  ${d}: ${n}`));
+  p.innerHTML=`<h3>Share summary</h3><p>Copy and paste into email, Slack or Notion.</p>
+    <div class="share-a"><textarea id="stxt" readonly>${ln.join("\n")}</textarea></div>
+    <div class="pa" style="margin-top:8px"><button onclick="csh(event)">Copy to clipboard</button><button onclick="setMode('n')">Close</button></div>`;
+}
+function csh(e){const ta=document.getElementById("stxt");try{navigator.clipboard.writeText(ta.value).then(()=>{e.target.textContent="Copied!";setTimeout(()=>e.target.textContent="Copy to clipboard",2000);});}catch(ex){ta.select();document.execCommand("copy");}}
+ra();
+</script>
+</body>
+</html>
